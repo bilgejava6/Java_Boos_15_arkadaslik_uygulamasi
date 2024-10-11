@@ -1,12 +1,15 @@
 package com.muhammet.arkadaslik_uygulamasi.service;
 
+import com.muhammet.arkadaslik_uygulamasi.dto.request.RegisterRequestDto;
 import com.muhammet.arkadaslik_uygulamasi.entity.Gender;
 import com.muhammet.arkadaslik_uygulamasi.entity.User;
 import com.muhammet.arkadaslik_uygulamasi.repository.UserRepository;
+import com.muhammet.arkadaslik_uygulamasi.views.VwUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * DİKKAT!!!!! spring boot bir sınıfın referanını oluşturmak için mutlaka
@@ -23,8 +26,8 @@ public class UserService {
      * e aktarır. Bu nedenle servis sınıfında repository nesnelerine ihtiyaç duyulur.
      * Burada repository değişkeni tanımlanmalı ve nesnesi oluşturulmalıdır.
      */
-//    @Autowired
-//    private UserRepository userRepository;
+    //    @Autowired
+    //    private UserRepository userRepository;
 
     /**
      * Dependency Injection  / DI
@@ -56,5 +59,55 @@ public class UserService {
 
     public List<User> kadinKullaniciListesi(){
         return userRepository.findAllByGender(Gender.FEMALE);
+    }
+
+    public void kullaniciKayitEt(String userName, String password, String email, String name) {
+        userRepository.save(User.builder()
+                        .userName(userName)
+                        .password(password)
+                        .email(email)
+                        .name(name)
+                .build());
+    }
+
+    public List<User> findAllByUserName(String userName) {
+       return userRepository.findAllByUserNameContaining(userName);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+
+    public User register(RegisterRequestDto dto) {
+      return  userRepository.save(User.builder()
+                        .userName(dto.getUserName())
+                        .email(dto.getEmail())
+                        .password(dto.getPassword())
+                .build());
+    }
+
+    public List<VwUser> getAllUserList() {
+        return  userRepository.tumKullanicilariGetir();
+    }
+
+    /**
+     * Aranılan kullanıcı id sini DB de sorgular, kayıt var ise true, yok ise false döner.
+     *
+     * @param userId
+     * @return
+     */
+    public boolean existsById(Long userId) {
+       // return userRepository.findById(userId).isPresent();
+        return userRepository.existsById(userId);
+    }
+
+    /**
+     * Aranılan kullanıcı idsi ile optional olarak kullanıcıyı döner.
+     * @param userId
+     * @return
+     */
+    public Optional<User> findOptionalById(Long userId){
+        return userRepository.findById(userId);
     }
 }

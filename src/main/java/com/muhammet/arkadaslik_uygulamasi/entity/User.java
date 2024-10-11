@@ -19,6 +19,7 @@ public class User {
     String name;
     String avatar;
     Gender gender;
+    @Column(length = 64, unique = true)
     String userName;
     String password;
     String phone;
@@ -29,5 +30,6 @@ public class User {
     Integer height;
     Integer followerCount;
     Integer followingCount;
+    Boolean isActive;
 
 }
