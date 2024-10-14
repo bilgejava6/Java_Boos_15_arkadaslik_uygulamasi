@@ -1,7 +1,5 @@
 package com.muhammet.arkadaslik_uygulamasi.exception;
 
-import com.muhammet.arkadaslik_uygulamasi.dto.response.BaseResponse;
-import com.muhammet.arkadaslik_uygulamasi.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

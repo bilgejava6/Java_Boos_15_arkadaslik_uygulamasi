@@ -2,11 +2,14 @@ package com.muhammet.arkadaslik_uygulamasi.controller;
 
 import com.muhammet.arkadaslik_uygulamasi.dto.request.AddFollowRequestDto;
 import com.muhammet.arkadaslik_uygulamasi.dto.response.BaseResponse;
+import com.muhammet.arkadaslik_uygulamasi.entity.User;
 import com.muhammet.arkadaslik_uygulamasi.service.FollowService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.muhammet.arkadaslik_uygulamasi.constants.RestApis.*;
 
@@ -43,6 +46,15 @@ public class FollowController {
         );
     }
 
+
+    /**
+     * A kişisinin takip ettiği kullanıcıların listesi nedir?
+     */
+    @GetMapping("/get-my-following")
+    public ResponseEntity<BaseResponse<List<User>>> getMyFollowing(Long userId){
+        List<User> kullaniciListesi = followService.getMyFollowing(userId);
+        return null;
+    }
 
 
 }

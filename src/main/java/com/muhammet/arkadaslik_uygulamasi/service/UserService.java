@@ -1,8 +1,10 @@
 package com.muhammet.arkadaslik_uygulamasi.service;
 
 import com.muhammet.arkadaslik_uygulamasi.dto.request.RegisterRequestDto;
+import com.muhammet.arkadaslik_uygulamasi.dto.request.UpdateUserProfileRequestDto;
 import com.muhammet.arkadaslik_uygulamasi.entity.Gender;
 import com.muhammet.arkadaslik_uygulamasi.entity.User;
+import com.muhammet.arkadaslik_uygulamasi.mapper.UserMapper;
 import com.muhammet.arkadaslik_uygulamasi.repository.UserRepository;
 import com.muhammet.arkadaslik_uygulamasi.views.VwUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +111,35 @@ public class UserService {
      */
     public Optional<User> findOptionalById(Long userId){
         return userRepository.findById(userId);
+    }
+
+    public List<User> findAllByIdIn(List<Long> followingIds) {
+        return userRepository.findAllByIdIn(followingIds);
+    }
+
+    public void updateUserProfile(UpdateUserProfileRequestDto dto) {
+       // User user = User.builder().name("murat").build(); // yeni kayıt
+       // User user1 = User.builder().id(3L).name("murat").build(); // eğer 3 id var ise üzerine yazar,
+       // User user2 = User.builder().id(3L).name("deniz").build(); // önceki kaydın üzerine yazar.
+        /**
+         * Burada dto -> user a dönüşüm yaptık ve elle oluşturduk.
+         * peki 50 adet alan olaydık 50 alan için böye dönüşüm mü yapacaktık.
+         * ve ayrıca zaman içerisinde alanların adları değişse idi bu değişklik nasıl yapılacaktı?
+         */
+//        User user = User.builder()
+//                .id(dto.getId())
+//                .name(dto.getName())
+//                .userName(dto.getUserName())
+//                .password(dto.getPassword())
+//                .avatar(dto.getAvatar())
+//                .email(dto.getEmail())
+//                .phone(dto.getPhone())
+//                .age(dto.getAge())
+//                .build();
+//        userRepository.save(user);
+//
+        User user = UserMapper.INSTANCE.eyyyyDtoUserNesnesineDonus(dto);
+        userRepository.save(user);
+
     }
 }

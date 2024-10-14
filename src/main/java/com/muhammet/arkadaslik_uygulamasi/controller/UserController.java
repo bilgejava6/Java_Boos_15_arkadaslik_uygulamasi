@@ -3,6 +3,7 @@ package com.muhammet.arkadaslik_uygulamasi.controller;
 import static com.muhammet.arkadaslik_uygulamasi.constants.RestApis.*;
 
 import com.muhammet.arkadaslik_uygulamasi.dto.request.RegisterRequestDto;
+import com.muhammet.arkadaslik_uygulamasi.dto.request.UpdateUserProfileRequestDto;
 import com.muhammet.arkadaslik_uygulamasi.dto.response.BaseResponse;
 import com.muhammet.arkadaslik_uygulamasi.entity.Gender;
 import com.muhammet.arkadaslik_uygulamasi.entity.User;
@@ -132,6 +133,22 @@ public class UserController {
         );
     }
 
+    /**
+     * HTTP Request tiplerini araştırarak ne işe yaradığını terimsel olarak ifade ediniz.
+     * Idempotent, Idempotency bu kavram nedir?
+     *
+     */
+
+    @PutMapping("/update-user-profile")
+    public ResponseEntity<BaseResponse<Boolean>> updateUserProfile(@RequestBody @Valid UpdateUserProfileRequestDto dto){
+        userService.updateUserProfile(dto);
+        return ResponseEntity.ok(BaseResponse.<Boolean>builder()
+                        .data(true)
+                        .message("Güncelleme başarılı")
+                        .code(200)
+                        .success(true)
+                .build());
+    }
 
 
 
